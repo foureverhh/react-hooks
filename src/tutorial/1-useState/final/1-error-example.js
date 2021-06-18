@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ErrorExample = () => {
+  
   let title = 'random title';
 
   const handleClick = () => {
