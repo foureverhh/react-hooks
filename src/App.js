@@ -1,6 +1,6 @@
 import React from 'react'
-import Setup from './tutorial/1-useState/setup/4-useState-object'
-import Final from './tutorial/1-useState/final/1-error-example'
+import Setup from './tutorial/2-useEffect/setup/2-useEffect-cleanup'
+import Final from './tutorial/2-useEffect/final/2-useEffect-cleanup'
 
 function App() {
   return (
