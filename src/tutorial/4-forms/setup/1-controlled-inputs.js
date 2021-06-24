@@ -6,27 +6,42 @@ import React, { useState } from 'react';
 // value, onChange
 
 const ControlledInputs = () => {
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [age, setAge] = useState('');
   const [people, setPeople] = useState([]);
+  const [person, setPerson] = useState({firstName: '', email:'',age:''});
   
-  const handleSubmit = (e)=> {
+  // const handleSubmit = (e)=> {
+    // e.preventDefault();
+    // if(firstName && email){
+      // console.log('Submit the form');
+      // const person = {id:new Date().getTime().toString(),firstName, email, age};
+      // console.log('Person: ' + JSON.stringify(person));
+      // setPeople((peopleOld)=>[...peopleOld,person]);
+      // setEmail('');  
+      // setFirstName('');
+      // setAge('');
+    // }else{
+      // console.log('empty values');
+    // }
+  //}
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(firstName && email){
-      console.log('Submit the form');
-      //const person = {firstName: firstName, email: email};
-      const person = {id:new Date().getTime().toString(),firstName, email};
-      console.log('Person: ' + JSON.stringify(person));
-      setPeople((peopleOld)=>[...peopleOld,person]);
-      //setPeople(()=>[...people,person]);
-      
-      setEmail('');
-      setFirstName('');
-    }else{
-      console.log('empty values');
+    if(person.firstName && person.email && person.age){
+      const newPerson = {...person,id:new Date().getTime().toString()}
+      setPeople([...people,newPerson]);
+      setPerson({firstName:'',age:'',email:''});
     }
+
   }
 
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value  = e.target.value;
+    console.log(name + ' , ' + value);
+    setPerson({...person,[name]:value});
+  }
   return (
     <>
       <article>
@@ -36,22 +51,32 @@ const ControlledInputs = () => {
             <input type="text" 
                     id="firstName" 
                     name="firstName" 
-                    value={firstName} 
-                    onChange={(e)=> setFirstName(e.target.value)}/>
+                    value={person.firstName} 
+                    //onChange={(e)=> setFirstName(e.target.value)}/>
+                    onChange={handleChange}/>
           </div>
           <div className="form-control">
             <label htmlFor="email">Email:</label>
             <input type="text" 
             id="email" 
             name="email" 
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}/>
+            value={person.email}
+            //onChange={(e)=>setEmail(e.target.value)}/>
+            onChange={handleChange}/>
+          </div>
+          <div className="form-control">
+            <label htmlFor="age">Age:</label>
+            <input type="text" 
+                    id="age" 
+                    name="age" 
+                    value={person.age} 
+                    //onChange={(e)=> setFirstName(e.target.value)}/>
+                    onChange={handleChange}/>
           </div>
           <button type="submit" onClick={handleSubmit}>Add Person</button>
         </form>
         <ul>
           welcome:
-          {console.log('People: ' + JSON.stringify(people))}
           {people.map((person,index) => {
             const {id,firstName,email} = person ;
             return (
