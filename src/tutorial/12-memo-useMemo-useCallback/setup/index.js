@@ -6,7 +6,19 @@ import { useFetch } from '../../9-custom-hooks/final/2-useFetch'
 const url = 'https://course-api.com/javascript-store-products'
 
 // every time props or state changes, component re-renders
-// components in React.memo(),if no changes then those components will never change
+// components in React.memo(),if no changes then those components will never rerender
+
+const calculateMostExpensive = (data) => {
+  console.log('calculateMostExpensive is called')
+  return data.reduce((total, item)=> {
+    const price = item.fields.price;
+    if(price >= total){
+      total = price;
+    }
+    return total;
+  },0)/100
+}
+
 const Index = () => {
   const { products } = useFetch(url);
   const [count, setCount] = useState(0);
@@ -15,6 +27,12 @@ const Index = () => {
   const addToCart = useCallback(()=> {
     setCart(cart+1);
   },[cart]);
+
+   //as calculateMostExpensive is called every time when rerender, so better to use useMemo() to save the value
+  const mostExpensive = useMemo(()=>{
+    return calculateMostExpensive(products)
+  },[products]);
+
   return (
     <>
       <h1>Count : {count}</h1>
@@ -22,6 +40,8 @@ const Index = () => {
         click me
       </button>
       <h1 style={{mariginTop:'3rem'}}>cart: {cart}</h1>
+      {/* <h1>Most Expensive : ${calculateMostExpensive(products)}</h1> */}
+      <h1>Most Expensive : ${mostExpensive}</h1>
       <BigList products={products} addToCart={addToCart}/>
     </>
   )
